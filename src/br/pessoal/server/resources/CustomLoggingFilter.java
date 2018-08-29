@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Logger;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -15,6 +16,8 @@ import org.glassfish.jersey.message.internal.ReaderWriter;
 
 public class CustomLoggingFilter extends LoggingFeature implements ContainerRequestFilter, ContainerResponseFilter{
 
+	private Logger logger = Logger.getLogger(CustomLoggingFilter.class.getName());
+	
 	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
 			throws IOException {
@@ -23,7 +26,7 @@ public class CustomLoggingFilter extends LoggingFeature implements ContainerRequ
 		builder.append("Header: ").append(responseContext.getHeaders())
 				.append(" - Entity: ").append(responseContext.getEntity());
 		
-		System.out.println("HTTP RESPONSE: "+builder.toString());	
+		logger.info("HTTP RESPONSE: "+builder.toString());		
 	}
 
 	@Override
@@ -34,9 +37,8 @@ public class CustomLoggingFilter extends LoggingFeature implements ContainerRequ
 				.append(" - Path: ").append(requestContext.getUriInfo().getPath())
 				.append(" - Header: ").append(requestContext.getHeaders())
 				.append(" - Entity: ").append(getEntityBody(requestContext));
-		
-		System.out.println("HTTP REQUEST: " + builder.toString());
-		
+				
+		logger.info("HTTP REQUEST: "+builder.toString());		
 	}
 
 	private Object getEntityBody(ContainerRequestContext requestContext) {
@@ -46,9 +48,7 @@ public class CustomLoggingFilter extends LoggingFeature implements ContainerRequ
 			
 			final StringBuilder builder = new StringBuilder();
 		try {
-		
-			ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-			InputStream inputStream = requestContext.getEntityStream();
+
 		
 			ReaderWriter.writeTo(in, out);
 			byte[] requestEntity = out.toByteArray();
