@@ -19,6 +19,11 @@ public class JerseyClient {
 
 	public static void main(String[] args) {
 
+		getEmpregadoById();
+	}
+
+	private static void getFuncionarios() {
+
 		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
 		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("funcionarios");
 
@@ -31,6 +36,20 @@ public class JerseyClient {
 		for (EmpregadoTO empregadoDaVez : list) {
 			System.out.println(empregadoDaVez.toString());
 		}
+	}
+	
+	private static void getEmpregadoById() {
+		
+		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
+		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("funcionarios").path("1600344");
+		
+		Invocation.Builder builder = target.request(MediaType.APPLICATION_XML);
+		Response response = builder.get();
+		
+		EmpregadoTO empregadoTO = response.readEntity(EmpregadoTO.class);		
 
+		System.out.println(response.getStatus());		
+		System.out.println(empregadoTO.toString());
+		
 	}
 }

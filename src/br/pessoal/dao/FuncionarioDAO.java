@@ -23,6 +23,59 @@ public class FuncionarioDAO {
 
 	}
 
+	public EmpregadoTO buscarFuncionarioById(Integer id) {
+
+		EmpregadoTO empregadoTO = new EmpregadoTO();
+		StringBuilder sqlStatement = new StringBuilder();
+		sqlStatement.append("SELECT funcionario.id_pessoa, ")
+		.append("funcionario.nome, ")
+		.append("funcionario.idade, ")
+		.append("profissao.nomeprof, ")
+		.append("tiposusuario.usuario ")
+		.append("FROM login, tiposusuario, funcionario ")
+		.append("INNER JOIN profissao ON funcionario.cod_prof = profissao.id_codprof ")
+		.append("WHERE login.tipousuario = tiposusuario.codtipousuario AND ")
+		.append("funcionario.id_pessoa = ? ");
+
+		logger.info(sqlStatement.toString());
+
+		try {
+			connection = pool.createSharedPoolDataSource();
+			statement = connection.prepareStatement(sqlStatement.toString());
+			statement.setInt(1, id);
+
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+
+				empregadoTO.setCodPessoa(resultSet.getInt(1));
+				empregadoTO.setNomePessoa(resultSet.getString(2));
+				empregadoTO.setIdade(resultSet.getInt(3));
+				empregadoTO.setProfissao(resultSet.getString(4));
+				empregadoTO.setTipoUsuario(resultSet.getString(5));
+			}
+		} catch (SQLException e) {			 
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {				 
+				e.printStackTrace();
+			}
+
+		}
+
+		return empregadoTO;
+	}
+
 	public List<EmpregadoTO> getListEmpregados(){
 
 		List<EmpregadoTO> empregados = new ArrayList<>();		
