@@ -28,11 +28,11 @@ public class FuncionarioDAO {
 		boolean operacaoEfetuada = false;
 		StringBuilder sqlStatement = new StringBuilder();
 		sqlStatement.append("INSERT INTO funcionario( ")
-					.append("id_pessoa, ")
-					.append("nome, ")
-					.append("idade, ")
-					.append("cod_prof) ")
-					.append("VALUES(?, ?, ?, ?)");	
+		.append("id_pessoa, ")
+		.append("nome, ")
+		.append("idade, ")
+		.append("cod_prof) ")
+		.append("VALUES(?, ?, ?, ?)");	
 
 		try {
 
@@ -42,7 +42,7 @@ public class FuncionarioDAO {
 			statement.setString(2, empregadoTO.getNomePessoa());
 			statement.setInt(3, empregadoTO.getIdade());
 			statement.setInt(4, getCodProfissao(empregadoTO.getProfissao()));
-			
+
 			logger.info(statement.toString());
 			statement.execute();
 			operacaoEfetuada = true;
@@ -173,12 +173,12 @@ public class FuncionarioDAO {
 		.append("FROM login, tiposusuario, funcionario ")
 		.append("INNER JOIN profissao ON funcionario.cod_prof = profissao.id_codprof ")
 		.append("WHERE login.tipousuario = tiposusuario.codtipousuario");
-	
+
 
 		try {
 			connection = pool.createSharedPoolDataSource();
 			statement = connection.prepareStatement(sqlStatement.toString());
-			
+
 			logger.info(statement.toString());
 			resultSet = statement.executeQuery();
 
@@ -215,6 +215,42 @@ public class FuncionarioDAO {
 
 		return empregados;
 	}
+	
+	public void attProfFuncionario(int id, String profissao) {
+		
+		StringBuilder sqlStatement = new StringBuilder();
+		sqlStatement.append("UPDATE funcionario ")
+					.append("SET cod_prof = ? ")
+					.append("WHERE id_pessoa = ? ");
+		
+		try {
+			connection = pool.createSharedPoolDataSource();
+			statement = connection.prepareStatement(sqlStatement.toString());
+			statement.setInt(1, id);
+			statement.setInt(2, getCodProfissao(profissao));
+			
+			logger.info(statement.toString());
+			statement.execute();
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {				
+				e.printStackTrace();
+			}
+
+		}	
+	}
 
 	public EmpregadoTO buscarUsuario(String user, String password) {
 
@@ -230,7 +266,7 @@ public class FuncionarioDAO {
 		.append("WHERE login.usuario = 'LooKs' AND ")
 		.append("login.senha = 'admin' AND ")
 		.append("login.tipousuario = tiposusuario.codtipousuario ");
-	
+
 
 		try {
 
@@ -238,7 +274,7 @@ public class FuncionarioDAO {
 			statement = connection.prepareStatement(sqlStatement.toString());
 			statement.setString(1, user);
 			statement.setString(2, password);
-			
+
 			logger.info(statement.toString());
 			resultSet = statement.executeQuery();
 

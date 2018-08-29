@@ -16,4 +16,14 @@ public class WebServiceUtils {
 		
 		return !isPersonvalid;
 	}
+	
+	public boolean isStringEmptyOrNull(String conteudo) {
+		
+		boolean isStringValid = false;
+		
+		isStringValid = conteudo==null?false:true;
+		isStringValid = conteudo.isEmpty()?false:true;
+		
+		return isStringValid;
+	}
 }

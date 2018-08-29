@@ -20,9 +20,21 @@ public class JerseyClient {
 
 	public static void main(String[] args) {
 
-		adicionarEmpregado();
+		atualizarFuncionario();
 	}
 
+	private static void atualizarFuncionario() {
+		
+		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
+		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("attProfFuncionarios").path("3");
+		
+		Invocation.Builder builder = target.request(MediaType.APPLICATION_XML);
+		Response response = builder.put(Entity.entity("Advogado", MediaType.APPLICATION_XML));
+		
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));
+	}
+	
 	private static void adicionarEmpregado() {
 		
 		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));

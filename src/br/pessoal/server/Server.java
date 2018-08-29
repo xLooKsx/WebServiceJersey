@@ -46,11 +46,18 @@ public class Server {
 		return funcionarioDAO.getListEmpregados();
 	}
 	
-//	@PUT
-//	@Path("/attFuncionarios/{id}")
-//	@Consumes(MediaType.APPLICATION_XML)
-//	@Produces(MediaType.APPLICATION_XML)
-//	public Response
+	@PUT
+	@Path("/attProfFuncionarios/{id}")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_XML)
+	public Response atualizarFuncionario(@PathParam("id") Integer id, String profissao) {
+		
+		if (!utils.isStringEmptyOrNull(profissao)) {
+			return Response.status(400).entity("Favor entre com uma profissao").build();
+		}
+			funcionarioDAO.attProfFuncionario(id, profissao);			
+		return Response.ok().entity("Operacao concluida com sucesso").build();
+	}
 
 	@GET
 	@Path("/funcionarios/{idFunc}")
