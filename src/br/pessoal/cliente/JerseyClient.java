@@ -20,9 +20,21 @@ public class JerseyClient {
 
 	public static void main(String[] args) {
 
-		atualizarFuncionario();
+		apagarFuncionario();
 	}
 
+	private static void apagarFuncionario() {
+		
+		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
+		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("rmrf/funcionario").path("3");
+		
+		Invocation.Builder builder = target.request();
+		Response response = builder.delete();
+		
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));
+	}
+	
 	private static void atualizarFuncionario() {
 		
 		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));

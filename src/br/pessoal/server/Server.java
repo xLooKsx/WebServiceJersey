@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -44,6 +45,17 @@ public class Server {
 	public List<EmpregadoTO> getEmpregados(){
 
 		return funcionarioDAO.getListEmpregados();
+	}
+	
+	@DELETE
+	@Path("/rmrf/funcionario/{id}")
+	public Response apagarFuncionario(@PathParam("id") Integer id) {
+		
+		if (id <= 0) {
+			return Response.ok().entity("Codigo de Id invalido").build();
+		}
+		 funcionarioDAO.apagarFuncionario(id);
+		return Response.ok().entity("Funcionario Deletado").build();
 	}
 	
 	@PUT

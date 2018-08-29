@@ -216,6 +216,41 @@ public class FuncionarioDAO {
 		return empregados;
 	}
 	
+	public void apagarFuncionario(int id) {
+		
+		StringBuilder sqlStatement = new StringBuilder();
+		sqlStatement.append("DELETE FROM funcionario ")
+					.append("WHERE id_pessoa = ? ");
+		
+		try {
+		
+			connection = pool.createSharedPoolDataSource();
+			statement = connection.prepareStatement(sqlStatement.toString());
+			statement.setInt(1, id);
+			
+			logger.info(statement.toString());
+			statement.execute();
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {				
+				e.printStackTrace();
+			}
+
+		}
+	}
+	
 	public void attProfFuncionario(int id, String profissao) {
 		
 		StringBuilder sqlStatement = new StringBuilder();
@@ -226,8 +261,8 @@ public class FuncionarioDAO {
 		try {
 			connection = pool.createSharedPoolDataSource();
 			statement = connection.prepareStatement(sqlStatement.toString());
-			statement.setInt(1, id);
-			statement.setInt(2, getCodProfissao(profissao));
+			statement.setInt(1, getCodProfissao(profissao));
+			statement.setInt(2, id);
 			
 			logger.info(statement.toString());
 			statement.execute();
