@@ -8,19 +8,17 @@ public class EmpregadoTO {
 	private int codPessoa;
 	private String nomePessoa;
 	private int idade;
-	private String profissao;
-	private String tipoUsuario;
+	private String profissao;	
 
 	public EmpregadoTO() {
-		this(0, "", 0, "", "");
+		this(0, "", 0, "");
 	}
 
-	public EmpregadoTO(int codPessoa, String nomePessoa, int idade, String profissao, String tipoUsuario) {
+	public EmpregadoTO(int codPessoa, String nomePessoa, int idade, String profissao) {
 		this.codPessoa = codPessoa;
 		this.nomePessoa = nomePessoa;
 		this.idade = idade;
-		this.profissao = profissao;
-		this.tipoUsuario = tipoUsuario;
+		this.profissao = profissao;		
 	}
 
 	public int getCodPessoa() {
@@ -55,15 +53,6 @@ public class EmpregadoTO {
 		this.profissao = profissao;
 	}	
 
-	public String getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(String tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
-
-
 	@Override
 	public String toString() {
 		StringBuilder builderJSON = new StringBuilder();
@@ -77,9 +66,7 @@ public class EmpregadoTO {
 		.append("\"idade\":")
 		.append(idade+",")		
 		.append("\"profissao\":")
-		.append("\""+profissao+"\",")			
-		.append("\"usuario\":")
-		.append("\""+tipoUsuario+"\"")			
+		.append("\""+profissao+"\"")					
 		.append("}")
 		.append("}");
 		return builderJSON.toString();

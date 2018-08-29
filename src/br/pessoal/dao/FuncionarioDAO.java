@@ -23,6 +23,92 @@ public class FuncionarioDAO {
 
 	}
 
+	public boolean cadastrarFuncionario(EmpregadoTO empregadoTO) {
+
+		boolean operacaoEfetuada = false;
+		StringBuilder sqlStatement = new StringBuilder();
+		sqlStatement.append("INSERT INTO funcionario( ")
+					.append("id_pessoa, ")
+					.append("nome, ")
+					.append("idade, ")
+					.append("cod_prof) ")
+					.append("VALUES(?, ?, ?, ?)");	
+
+		try {
+
+			connection = pool.createSharedPoolDataSource();
+			statement = connection.prepareStatement(sqlStatement.toString());
+			statement.setInt(1, empregadoTO.getCodPessoa());
+			statement.setString(2, empregadoTO.getNomePessoa());
+			statement.setInt(3, empregadoTO.getIdade());
+			statement.setInt(4, getCodProfissao(empregadoTO.getProfissao()));
+			
+			logger.info(statement.toString());
+			statement.execute();
+			operacaoEfetuada = true;
+
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (statement != null) {
+					statement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {				 
+				e.printStackTrace();
+			}
+
+		}
+
+		return operacaoEfetuada;
+	}
+
+	private int getCodProfissao(String profissao) {
+
+		PreparedStatement statement = null;		
+
+		int codigoProfissao = 1;
+
+		StringBuilder sqlStatement = new StringBuilder();
+		sqlStatement.append("SELECT id_codprof ")
+		.append("FROM profissao ")
+		.append("WHERE nomeprof = ? ");	
+
+		try {
+
+			connection = pool.createSharedPoolDataSource();
+			statement = connection.prepareStatement(sqlStatement.toString());
+			statement.setString(1, profissao.trim());
+
+			logger.info(statement.toString());
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				codigoProfissao = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}finally {
+
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {				 
+				e.printStackTrace();
+			}
+
+		}
+
+		return codigoProfissao;
+	}
+
 	public EmpregadoTO buscarFuncionarioById(Integer id) {
 
 		EmpregadoTO empregadoTO = new EmpregadoTO();
@@ -35,15 +121,14 @@ public class FuncionarioDAO {
 		.append("FROM login, tiposusuario, funcionario ")
 		.append("INNER JOIN profissao ON funcionario.cod_prof = profissao.id_codprof ")
 		.append("WHERE login.tipousuario = tiposusuario.codtipousuario AND ")
-		.append("funcionario.id_pessoa = ? ");
-
-		logger.info(sqlStatement.toString());
+		.append("funcionario.id_pessoa = ? ");	
 
 		try {
 			connection = pool.createSharedPoolDataSource();
 			statement = connection.prepareStatement(sqlStatement.toString());
 			statement.setInt(1, id);
 
+			logger.info(statement.toString());
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 
@@ -51,7 +136,7 @@ public class FuncionarioDAO {
 				empregadoTO.setNomePessoa(resultSet.getString(2));
 				empregadoTO.setIdade(resultSet.getInt(3));
 				empregadoTO.setProfissao(resultSet.getString(4));
-				empregadoTO.setTipoUsuario(resultSet.getString(5));
+				//				empregadoTO.setTipoUsuario(resultSet.getString(5));
 			}
 		} catch (SQLException e) {			 
 			e.printStackTrace();
@@ -88,12 +173,13 @@ public class FuncionarioDAO {
 		.append("FROM login, tiposusuario, funcionario ")
 		.append("INNER JOIN profissao ON funcionario.cod_prof = profissao.id_codprof ")
 		.append("WHERE login.tipousuario = tiposusuario.codtipousuario");
-
-		logger.info(sqlStatement.toString());
+	
 
 		try {
 			connection = pool.createSharedPoolDataSource();
 			statement = connection.prepareStatement(sqlStatement.toString());
+			
+			logger.info(statement.toString());
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
@@ -103,7 +189,7 @@ public class FuncionarioDAO {
 				empregadoTO.setNomePessoa(resultSet.getString(2));
 				empregadoTO.setIdade(resultSet.getInt(3));
 				empregadoTO.setProfissao(resultSet.getString(4));
-				empregadoTO.setTipoUsuario(resultSet.getString(5));
+				//				empregadoTO.setTipoUsuario(resultSet.getString(5));
 				empregados.add(empregadoTO);
 
 			}
@@ -144,8 +230,7 @@ public class FuncionarioDAO {
 		.append("WHERE login.usuario = 'LooKs' AND ")
 		.append("login.senha = 'admin' AND ")
 		.append("login.tipousuario = tiposusuario.codtipousuario ");
-
-		logger.info(sqlStatement.toString());
+	
 
 		try {
 
@@ -153,6 +238,8 @@ public class FuncionarioDAO {
 			statement = connection.prepareStatement(sqlStatement.toString());
 			statement.setString(1, user);
 			statement.setString(2, password);
+			
+			logger.info(statement.toString());
 			resultSet = statement.executeQuery();
 
 
@@ -162,7 +249,7 @@ public class FuncionarioDAO {
 				empregadoTO.setNomePessoa(resultSet.getString(2));
 				empregadoTO.setIdade(resultSet.getInt(3));
 				empregadoTO.setProfissao(resultSet.getString(4));
-				empregadoTO.setTipoUsuario(resultSet.getString(5));
+				//				empregadoTO.setTipoUsuario(resultSet.getString(5));
 			}
 		} catch (SQLException e) {			
 			e.printStackTrace();

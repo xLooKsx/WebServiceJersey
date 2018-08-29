@@ -12,8 +12,8 @@ public class WebServiceUtils {
 		isPersonvalid = empregadoTO.getIdade()>0?true:false;
 		isPersonvalid = empregadoTO.getNomePessoa().isEmpty()?false:true;
 		isPersonvalid = empregadoTO.getProfissao().isEmpty()?false:true;
-		isPersonvalid = empregadoTO.getTipoUsuario().isEmpty()?false:true;
+//		isPersonvalid = empregadoTO.getTipoUsuario().isEmpty()?false:true;
 		
-		return isPersonvalid;
+		return !isPersonvalid;
 	}
 }
