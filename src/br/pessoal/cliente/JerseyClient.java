@@ -20,7 +20,7 @@ public class JerseyClient {
 
 	public static void main(String[] args) {
 
-		apagarFuncionario();
+		getFuncionarios();
 	}
 
 	private static void apagarFuncionario() {
