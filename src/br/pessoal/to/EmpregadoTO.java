@@ -53,22 +53,22 @@ public class EmpregadoTO {
 		this.profissao = profissao;
 	}	
 
-	@Override
-	public String toString() {
-		StringBuilder builderJSON = new StringBuilder();
-		builderJSON.append("{")
-		.append("\"PessoaTO\":")
-		.append("{")
-		.append("\"codPessoa\":")
-		.append(codPessoa+",")
-		.append("\"nomePessoa\":")
-		.append("\""+nomePessoa+"\",")			
-		.append("\"idade\":")
-		.append(idade+",")		
-		.append("\"profissao\":")
-		.append("\""+profissao+"\"")					
-		.append("}")
-		.append("}");
-		return builderJSON.toString();
-	}
+//	@Override
+//	public String toString() {
+//		StringBuilder builderJSON = new StringBuilder();
+//		builderJSON.append("{")
+//		.append("\"PessoaTO\":")
+//		.append("{")
+//		.append("\"codPessoa\":")
+//		.append(codPessoa+",")
+//		.append("\"nomePessoa\":")
+//		.append("\""+nomePessoa+"\",")			
+//		.append("\"idade\":")
+//		.append(idade+",")		
+//		.append("\"profissao\":")
+//		.append("\""+profissao+"\"")					
+//		.append("}")
+//		.append("}");
+//		return builderJSON.toString();
+//	}
 }
