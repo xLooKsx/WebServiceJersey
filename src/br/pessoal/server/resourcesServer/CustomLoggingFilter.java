@@ -1,4 +1,4 @@
-package br.pessoal.server.resources;
+package br.pessoal.server.resourcesServer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

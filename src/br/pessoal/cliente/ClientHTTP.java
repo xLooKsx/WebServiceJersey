@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -20,7 +21,7 @@ public class ClientHTTP {
 
 	public static void main(String[] args) {
 
-		receberJSON();
+		enviarJSON();
 	}
 
 	private static void receberJSON() {
@@ -53,12 +54,10 @@ public class ClientHTTP {
 		
 		StringBuilder json = new StringBuilder();
 		json.append("{\r\n" + 
-				"	\"PessoaTO\": {\r\n" + 
-				"		\"codPessoa\": 3,\r\n" + 
-				"		\"nomePessoa\": \"Jacarepagua\",\r\n" + 
-				"		\"idade\": 2,\r\n" + 
-				"		\"profissao\": \"crianca\"\r\n" + 
-				"	}\r\n" + 
+				"	\"codPessoa\": 3,\r\n" + 
+				"	\"nomePessoa\": \"Jacarepagua\",\r\n" + 
+				"	\"idade\": 2,\r\n" + 
+				"	\"profissao\": \"crianca\"\r\n" + 
 				"}");
 		
 		try {
@@ -68,6 +67,22 @@ public class ClientHTTP {
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/json");
 			
+			OutputStream outputStream = connection.getOutputStream();
+			outputStream.write(json.toString().getBytes());
+			outputStream.flush();
+			
+			if (connection.getResponseCode() != HttpURLConnection.HTTP_ACCEPTED) {
+				throw new RuntimeException("FALHA: CODIGO HTTP ERRO: " + connection.getResponseCode());
+			}
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String resposta;
+			System.out.println("RESPOSTA DO SERVIDOR......");
+			while ((resposta = reader.readLine()) != null) {
+				System.out.println(resposta);
+			}
+			
+			connection.disconnect();
 		} catch (MalformedURLException e) {			
 			e.printStackTrace();
 		} catch (IOException e) {			 

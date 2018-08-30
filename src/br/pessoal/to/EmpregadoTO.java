@@ -51,8 +51,14 @@ public class EmpregadoTO {
 
 	public void setProfissao(String profissao) {
 		this.profissao = profissao;
-	}	
+	}
 
+	@Override
+	public String toString() {
+		return "EmpregadoTO [codPessoa=" + codPessoa + ", nomePessoa=" + nomePessoa + ", idade=" + idade
+				+ ", profissao=" + profissao + "]";
+	}		
+	
 //	@Override
 //	public String toString() {
 //		StringBuilder builderJSON = new StringBuilder();

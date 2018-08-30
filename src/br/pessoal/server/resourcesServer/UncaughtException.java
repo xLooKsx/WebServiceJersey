@@ -1,4 +1,4 @@
-package br.pessoal.server.resources;
+package br.pessoal.server.resourcesServer;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

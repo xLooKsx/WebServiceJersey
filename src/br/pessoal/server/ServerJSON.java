@@ -39,8 +39,7 @@ public class ServerJSON {
 	
 	@POST
 	@Path("/cadFuncionario")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)	
 	public Response adicionarEmpregado(EmpregadoTO empregadoTO) throws URISyntaxException {
 
 		if (empregadoTO == null) {
@@ -49,6 +48,6 @@ public class ServerJSON {
 			return Response.status(400).entity("Funcionario Vazio").build();
 		}
 
-		return Response.status(201).entity("NOVO FUNCIONARIO: "+empregadoTO).build();
+		return Response.status(202).entity("NOVO FUNCIONARIO: " + empregadoTO.toString()).build();
 	}
 }
