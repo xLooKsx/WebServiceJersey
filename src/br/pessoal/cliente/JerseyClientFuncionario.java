@@ -16,7 +16,7 @@ import org.glassfish.jersey.logging.LoggingFeature;
 
 import br.pessoal.to.EmpregadoTO;
 
-public class JerseyClient {
+public class JerseyClientFuncionario {
 
 	public static void main(String[] args) {
 
@@ -26,7 +26,7 @@ public class JerseyClient {
 	private static void apagarFuncionario() {
 		
 		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
-		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("rmrf/funcionario").path("3");
+		WebTarget target = client.target("http://127.0.0.1:8080/WebService/funcionario").path("rmrf/funcionario").path("3");
 		
 		Invocation.Builder builder = target.request();
 		Response response = builder.delete();
@@ -38,7 +38,7 @@ public class JerseyClient {
 	private static void atualizarFuncionario() {
 		
 		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
-		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("attProfFuncionarios").path("3");
+		WebTarget target = client.target("http://127.0.0.1:8080/WebService/funcionario").path("attProfFuncionarios").path("3");
 		
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_XML);
 		Response response = builder.put(Entity.entity("Advogado", MediaType.APPLICATION_XML));
@@ -50,7 +50,7 @@ public class JerseyClient {
 	private static void adicionarEmpregado() {
 		
 		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
-		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("cadFuncionarios");
+		WebTarget target = client.target("http://127.0.0.1:8080/WebService/funcionario").path("cadFuncionarios");
 		
 		EmpregadoTO empregadoTO = new EmpregadoTO(03, "Guilherme", 35, "Bombeiro ");
 		
@@ -64,7 +64,7 @@ public class JerseyClient {
 	private static void getFuncionarios() {
 
 		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
-		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("funcionarios");
+		WebTarget target = client.target("http://127.0.0.1:8080/WebService/funcionario").path("funcionarios");
 
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_XML);
 		Response response = builder.get();
@@ -80,7 +80,7 @@ public class JerseyClient {
 	private static void getEmpregadoById() {
 		
 		Client client = ClientBuilder.newClient(new ClientConfig().register(LoggingFeature.class));
-		WebTarget target = client.target("http://127.0.0.1:8080/WebService").path("funcionarios").path("1600344");
+		WebTarget target = client.target("http://127.0.0.1:8080/WebService/funcionario").path("funcionarios").path("1600344");
 		
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_XML);
 		Response response = builder.get();

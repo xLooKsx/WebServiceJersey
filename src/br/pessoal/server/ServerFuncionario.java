@@ -21,8 +21,8 @@ import br.pessoal.server.utils.WebServiceUtils;
 import br.pessoal.to.EmpregadoTO;
 
 
-@Path("/")
-public class Server {
+@Path("/funcionario")
+public class ServerFuncionario {
 
 	private FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	private WebServiceUtils utils = new WebServiceUtils();

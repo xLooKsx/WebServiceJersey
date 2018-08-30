@@ -113,7 +113,7 @@ public class CustomLoggingFilter implements ContainerRequestFilter, ContainerRes
         }
     	long startTime = Long.parseLong(stTime);
         long executionTime = System.currentTimeMillis() - startTime;
-        logger.info("TEMPO TOTAL DA REQUISICAO: "+executionTime+"milliseconds");        
+        logger.info("TEMPO TOTAL DA REQUISICAO: "+executionTime+" milliseconds");        
         MDC.clear();
     }
 }
