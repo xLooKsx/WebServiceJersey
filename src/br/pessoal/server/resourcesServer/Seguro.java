@@ -7,9 +7,12 @@ import java.lang.annotation.Target;
 
 import javax.ws.rs.NameBinding;
 
+import br.pessoal.numeration.NivelPermissao;
+
 @NameBinding
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface Seguro {
 
+	NivelPermissao[] value() default{};
 }

@@ -1,4 +1,4 @@
-package br.pessoal.teste;
+package br.pessoal.server.resourcesServer;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +15,7 @@ import javax.xml.bind.DatatypeConverter;
 import com.google.gson.Gson;
 
 import br.pessoal.dao.UsuarioDAO;
+import br.pessoal.numeration.NivelPermissao;
 import br.pessoal.server.utils.WebServiceUtils;
 import br.pessoal.to.UsuarioTO;
 import io.jsonwebtoken.Claims;
@@ -96,5 +97,10 @@ public class LoginService {
 				.parseClaimsJws(token).getBody();
 		
 		return claims;
+	}
+
+	public NivelPermissao buscarNivelPermissao(String login) {
+		 
+		return NivelPermissao.NIVEL1;
 	}
 }

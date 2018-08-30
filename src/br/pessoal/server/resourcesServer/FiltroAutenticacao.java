@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 
-import br.pessoal.teste.LoginService;
 import io.jsonwebtoken.Claims;
 
 //Defini que a @seguro que vai utilizar essa classe

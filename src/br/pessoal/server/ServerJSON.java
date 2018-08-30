@@ -1,6 +1,5 @@
 package br.pessoal.server;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.ws.rs.Consumes;
@@ -14,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.pessoal.dao.FuncionarioDAO;
+import br.pessoal.server.resourcesServer.Seguro;
 import br.pessoal.server.utils.WebServiceUtils;
 import br.pessoal.to.EmpregadoTO;
 
@@ -37,6 +37,7 @@ public class ServerJSON {
 		return Response.ok().entity(entity).build();
 	}
 	
+	@Seguro
 	@POST
 	@Path("/cadFuncionario")
 	@Consumes(MediaType.APPLICATION_JSON)	

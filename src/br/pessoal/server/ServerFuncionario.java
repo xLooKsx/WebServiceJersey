@@ -17,10 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import br.pessoal.dao.FuncionarioDAO;
+import br.pessoal.server.resourcesServer.Seguro;
 import br.pessoal.server.utils.WebServiceUtils;
 import br.pessoal.to.EmpregadoTO;
 
-
+//Caso a anotacao @Seguro seja colocada aqui todos os recursos ficaram protegidos
 @Path("/funcionario")
 public class ServerFuncionario {
 
@@ -47,6 +48,7 @@ public class ServerFuncionario {
 		return funcionarioDAO.getListEmpregados();
 	}
 	
+	@Seguro
 	@DELETE
 	@Path("/rmrf/funcionario/{id}")
 	public Response apagarFuncionario(@PathParam("id") Integer id) {

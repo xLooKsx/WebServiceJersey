@@ -5,12 +5,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
+import br.pessoal.numeration.NivelPermissao;
 import br.pessoal.server.resourcesServer.Seguro;
 
 @Path("/teste")
 public class ConversorMedidasService {
 
-	@Seguro
+	@Seguro({NivelPermissao.NIVEL1})
 	@GET
 	@Path("quilometrosToMilha/{quilometros}")
 	public Response quilometrosToMilha(@PathParam("quilometros") Double quilometros) {
@@ -19,6 +20,7 @@ public class ConversorMedidasService {
 		return Response.ok(quilometros).build();
 	}
 	
+	@Seguro({NivelPermissao.NIVEL2})
 	@GET
 	@Path("milhaToQuilometros/{milhas}")
 	public Response milhasToQuilometros(@PathParam("milhas") Double milhas) {

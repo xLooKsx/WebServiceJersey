@@ -92,7 +92,7 @@ public class ClientHTTP {
 	
 	private static void clientHTTPAutenticado() {
 		
-		String token;
+		String token = "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MzU2NjI1OTUsImlzcyI6Ikxvb0tzIiwiZXhwIjoxNTM1NzQ4OTk1fQ.utvB2G5jtpoN9Lb7Mw4bPmJpxnqv3Uya0D1XO1N_OwXnnNLFdmWaVFDh5O6ZqqOiSxhp0c4XIDDRXK00LYK7ww";
 		String resposta;
 		StringBuilder json = new StringBuilder();
 		json.append("{\r\n" + 
@@ -103,23 +103,24 @@ public class ClientHTTP {
 		
 		try {
 			//----------------------INICIO DA REQUISICAO DO TOKEN----------------------------------------
-			URL urlToken = new URL("http://127.0.0.1:8080/WebService/login");
-			HttpURLConnection connectionToken = (HttpURLConnection) urlToken.openConnection();
-			connectionToken.setDoOutput(true);
-			connectionToken.setRequestMethod("POST");
-			connectionToken.setRequestProperty("Content-Type", "application/json");
-			
-			OutputStream outputStream = connectionToken.getOutputStream();
-			outputStream.write(json.toString().getBytes());
-			outputStream.flush();
-			
-			BufferedReader readerToken = new BufferedReader(new InputStreamReader(connectionToken.getInputStream()));		
-			token = readerToken.readLine();
-			connectionToken.disconnect();
+//			URL urlToken = new URL("http://127.0.0.1:8080/WebService/login");
+//			HttpURLConnection connectionToken = (HttpURLConnection) urlToken.openConnection();
+//			connectionToken.setDoOutput(true);
+//			connectionToken.setRequestMethod("POST");
+//			connectionToken.setRequestProperty("Content-Type", "application/json");
+//			
+//			OutputStream outputStream = connectionToken.getOutputStream();
+//			outputStream.write(json.toString().getBytes());
+//			outputStream.flush();
+//			
+//			BufferedReader readerToken = new BufferedReader(new InputStreamReader(connectionToken.getInputStream()));		
+//			token = readerToken.readLine();
+//			connectionToken.disconnect();
 //			System.out.println(token);
 //			//----------------------FIM DA REQUISICAO DO TOKEN----------------------------------------
 			
-			URL urlServico = new URL("http://127.0.0.1:8080/WebService/teste/quilometrosToMilha/3");
+			
+			URL urlServico = new URL("http://127.0.0.1:8080/WebService/teste/quilometrosToMilha/2");
 			HttpURLConnection connectionServico = (HttpURLConnection) urlServico.openConnection();
 			connectionServico.setRequestMethod("GET");
 			connectionServico.setRequestProperty("Authorization", "Bearer "+token);

@@ -28,8 +28,7 @@ public class ServerDownload {
 			public void write(OutputStream output) throws IOException, WebApplicationException {
 				
 				
-				try {
-					String pathAux = this.getClass().getClassLoader().getResource("").getPath();
+				try {				
 					java.nio.file.Path path = Paths.get("C:/apache-tomcat-9.0.11/resource/solaire.jpg");					
 					byte[] data = Files.readAllBytes(path);
 					output.write(data);
