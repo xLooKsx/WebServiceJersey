@@ -11,7 +11,7 @@ import br.pessoal.server.resourcesServer.Seguro;
 @Path("/teste")
 public class ConversorMedidasService {
 
-	@Seguro({NivelPermissao.NIVEL1})
+	@Seguro({NivelPermissao.ADMIN})
 	@GET
 	@Path("quilometrosToMilha/{quilometros}")
 	public Response quilometrosToMilha(@PathParam("quilometros") Double quilometros) {
@@ -20,7 +20,7 @@ public class ConversorMedidasService {
 		return Response.ok(quilometros).build();
 	}
 	
-	@Seguro({NivelPermissao.NIVEL2})
+	@Seguro({NivelPermissao.OPERADOR})
 	@GET
 	@Path("milhaToQuilometros/{milhas}")
 	public Response milhasToQuilometros(@PathParam("milhas") Double milhas) {

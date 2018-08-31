@@ -92,13 +92,12 @@ public class ClientHTTP {
 	
 	private static void clientHTTPAutenticado() {
 		
-		String token = "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MzU2NjI1OTUsImlzcyI6Ikxvb0tzIiwiZXhwIjoxNTM1NzQ4OTk1fQ.utvB2G5jtpoN9Lb7Mw4bPmJpxnqv3Uya0D1XO1N_OwXnnNLFdmWaVFDh5O6ZqqOiSxhp0c4XIDDRXK00LYK7ww";
+		String token = "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MzU3MjI2NDgsImlzcyI6Ik9QRVJBRE9SIiwiZXhwIjoxNTM1ODA5MDUwfQ.jBMnqC8jQNGMdm4wQFe7DR1Os6jdqOV13MSjnHd30dIzRxcGTeq89QwEyBFQBIIglO6EdEV9SjoVzTssU6Ou8w";
 		String resposta;
 		StringBuilder json = new StringBuilder();
 		json.append("{\r\n" + 
 				"	\"usuario\": \"LooKs\",\r\n" + 
-				"	\"senha\": \"admin\",\r\n" + 
-				"	\"tipoUsuario\": \"ADMIN\"\r\n" + 				
+				"	\"senha\": \"admin\"\r\n" + 				 			
 				"}");
 		
 		try {
@@ -120,7 +119,7 @@ public class ClientHTTP {
 //			//----------------------FIM DA REQUISICAO DO TOKEN----------------------------------------
 			
 			
-			URL urlServico = new URL("http://127.0.0.1:8080/WebService/teste/quilometrosToMilha/2");
+			URL urlServico = new URL("http://127.0.0.1:8080/WebService/teste/milhaToQuilometros/2");
 			HttpURLConnection connectionServico = (HttpURLConnection) urlServico.openConnection();
 			connectionServico.setRequestMethod("GET");
 			connectionServico.setRequestProperty("Authorization", "Bearer "+token);

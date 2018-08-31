@@ -2,6 +2,7 @@ package br.pessoal.server.resourcesServer;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 
 import javax.annotation.Priority;
 import javax.ws.rs.NotAuthorizedException;
@@ -45,19 +46,30 @@ public class FiltroAutenticacao implements ContainerRequestFilter{
 			Claims claims = new LoginService().validaToken(token);
 			
 			//Se não for valido o metodo retorna um objeto nulo que vai gerar uma exception
-			if (claims == null) {
+			if (claims == null || checkDateToken(claims.getExpiration().getTime())) {
 				throw new Exception("Token Invalido");
 			}
 			
 			//metodo que modifica o SecurityContext para disponibilizar o login do usuario
-			modificarRequestContext(requestContext, claims.getId());
+			modificarRequestContext(requestContext, claims.getIssuer());
 		} catch (Exception e) {
 			
 			//Caso o token for invalido a requisição é abortada e retorna uma resposta com status 401 UNAUTHORIZED
-			e.printStackTrace();
+			e.printStackTrace();	
 			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
-			
 		}
+	}
+	
+	private boolean checkDateToken(Long validadeToken) {
+		
+		Date dataToken = new Date(validadeToken);
+		Date dataAtual = new Date();
+		
+		if (dataToken.before(dataAtual)) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	//metodo que modifica o RequestContext

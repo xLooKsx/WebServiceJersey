@@ -41,14 +41,14 @@ public class LoginService {
 			//aqui o objeto gson transforma a crendenciaisJson pra a variavel usuario do tipo Usuario
 			UsuarioTO usuario = gson.fromJson(credenciaisJSON, UsuarioTO.class);
 			//Verifica se a credencial é valida, se não for vai dar exception 
-			if (utils.isUsuarioVazio(usuario)) {
+			if (utils.isObjectNull(usuario)) {
 				return Response.status(500).entity("USUARIO INVALIDO").build();
 			}else if(!usuarioDAO.isUsuarioReal(usuario)) {
 				return Response.status(500).entity("USUARIO INVALIDO").build();
 			}
 			
 			//Se a for valida gera o token e passa a quantidade de dias que o token vai ser valido nesse caso 1 dia
-			String token = gerarToken(usuario.getUsuario(), 1);
+			String token = gerarToken(usuario.getTipoUsuario().toUpperCase(), 1);
 			
 			//Retorna uma resposta com o status 200 OK com o token gerado
 			return Response.ok(token).build();
@@ -101,6 +101,11 @@ public class LoginService {
 
 	public NivelPermissao buscarNivelPermissao(String login) {
 		 
-		return NivelPermissao.NIVEL1;
+		for (NivelPermissao permissaoDaVez : NivelPermissao.values()) {
+			if (permissaoDaVez.getNivelPermissao().equals(login)) {
+				return permissaoDaVez;
+			}
+		}
+		return NivelPermissao.UNKNOWN;
 	}
 }

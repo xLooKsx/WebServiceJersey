@@ -53,9 +53,9 @@ public class FiltroAutorizacao implements ContainerRequestFilter{
 			/*Verifica se o usuário tem permissão pra executar esse método
 			 * Os níveis de acesso do método sobrepõe o da classe*/
 			if (nivelPermissaoMetodo.isEmpty()) {
-				checarPermissoes(nivelPermissaoClasse, login);
+				checarPermissoes(nivelPermissaoClasse, login, requestContext);
 			}else {
-				checarPermissoes(nivelPermissaoMetodo, login);				
+				checarPermissoes(nivelPermissaoMetodo, login, requestContext);				
 			}
 		} catch (Exception e) {
 			 /*Se caso o usuário não possui permissão é dado um exception,
@@ -64,7 +64,7 @@ public class FiltroAutorizacao implements ContainerRequestFilter{
 		}
 	}
 
-	private void checarPermissoes(List<NivelPermissao> nivelPermissaoMetodo, String login) {
+	private void checarPermissoes(List<NivelPermissao> nivelPermissaoMetodo, String login, ContainerRequestContext requestContext) {
 		 try {
 			if (nivelPermissaoMetodo.isEmpty()) {
 				return;
@@ -81,7 +81,7 @@ public class FiltroAutorizacao implements ContainerRequestFilter{
 				}
 			}
 			if (!temPermissao) {
-				throw new Exception("Cliente não possui nivel de permissao para esse metodo");
+				requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
 			}
 		} catch (Exception e) {
 			 e.printStackTrace();			 

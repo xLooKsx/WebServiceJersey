@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
+import br.pessoal.server.utils.WebServiceUtils;
 import br.pessoal.to.UsuarioTO;
 
 public class UsuarioDAO {
@@ -15,33 +16,34 @@ public class UsuarioDAO {
 	private PreparedStatement statement;
 	private ResultSet resultSet;
 	
-	ConnectionPool pool = new ConnectionPool();
+	private ConnectionPool pool = new ConnectionPool();
 	private Logger logger = Logger.getLogger(FuncionarioDAO.class);
+	private WebServiceUtils utils = new WebServiceUtils();
 	
 	public boolean isUsuarioReal(UsuarioTO usuarioTO) {
 		
 		boolean isUserReal = false;
 		
 		StringBuilder sqlStatement = new StringBuilder();
-		sqlStatement.append("SELECT EXISTS( ")
-					.append("SELECT * FROM login ")
-					.append("INNER JOIN	tiposusuario ON tiposusuario.usuario = ? ")
+		sqlStatement.append("SELECT tiposusuario.usuario ")
+					.append("FROM login ")
+					.append("INNER JOIN	tiposusuario ON tiposusuario.codtipousuario = login.tipousuario ")
 					.append("WHERE login.usuario = ? ")
 					.append("AND ")
-					.append("login.senha = ?) ");
+					.append("login.senha = ? ");
 		
 		try {
 			connection = pool.createSharedPoolDataSource();
-			statement = connection.prepareStatement(sqlStatement.toString());
-			statement.setString(1, usuarioTO.getTipoUsuario());
-			statement.setString(2, usuarioTO.getUsuario());
-			statement.setString(3, usuarioTO.getSenha());
+			statement = connection.prepareStatement(sqlStatement.toString());			
+			statement.setString(1, usuarioTO.getUsuario());
+			statement.setString(2, usuarioTO.getSenha());
 			
 			logger.info(statement.toString());
 			resultSet = statement.executeQuery();
 			
 			if (resultSet.next()) {
-				isUserReal = resultSet.getBoolean(1);
+				usuarioTO.setTipoUsuario(resultSet.getString(1));	
+				isUserReal = true;
 			}
 						
 		} catch (SQLException e) {			
