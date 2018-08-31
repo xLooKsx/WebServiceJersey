@@ -92,8 +92,7 @@ public class ClientHTTP {
 	
 	private static void clientHTTPAutenticado() {
 		
-		String token = "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MzU3MjI2NDgsImlzcyI6Ik9QRVJBRE9SIiwiZXhwIjoxNTM1ODA5MDUwfQ.jBMnqC8jQNGMdm4wQFe7DR1Os6jdqOV13MSjnHd30dIzRxcGTeq89QwEyBFQBIIglO6EdEV9SjoVzTssU6Ou8w";
-		String resposta;
+		String token = "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MzU3MjI2NDgsImlzcyI6Ik9QRVJBRE9SIiwiZXhwIjoxNTM1ODA5MDUwfQ.jBMnqC8jQNGMdm4wQFe7DR1Os6jdqOV13MSjnHd30dIzRxcGTeq89QwEyBFQBIIglO6EdEV9SjoVzTssU6Ou8w";		
 		StringBuilder json = new StringBuilder();
 		json.append("{\r\n" + 
 				"	\"usuario\": \"LooKs\",\r\n" + 

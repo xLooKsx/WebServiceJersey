@@ -14,8 +14,8 @@ public class WebServiceUtils {
 
 		qtdCamposvazios += empregadoTO.getCodPessoa()>0?-1:1;
 		qtdCamposvazios += empregadoTO.getIdade()>0?-1:2;
-		qtdCamposvazios += empregadoTO.getNomePessoa().isEmpty()?-1:3;
-		qtdCamposvazios += empregadoTO.getProfissao().isEmpty()?-1:4;		
+		qtdCamposvazios += empregadoTO.getNomePessoa().isEmpty()?3:-1;
+		qtdCamposvazios += empregadoTO.getProfissao().isEmpty()?4:-1;		
 
 		return qtdCamposvazios>=0?true:false;
 	}
