@@ -2,23 +2,18 @@ package br.pessoal.cliente;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.Base64;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 
 public class ClientHTTP {
 
-	private static final Logger logger = Logger.getLogger(ClientHTTP.class);
+//	private static final Logger logger = Logger.getLogger(ClientHTTP.class);
 
 	public static void main(String[] args) {
 

@@ -37,7 +37,7 @@ public class ServerJSON {
 		return Response.ok().entity(entity).build();
 	}
 	
-//	@Seguro
+	@Seguro
 	@POST
 	@Path("/cadFuncionario")
 	@Consumes(MediaType.APPLICATION_JSON)	
