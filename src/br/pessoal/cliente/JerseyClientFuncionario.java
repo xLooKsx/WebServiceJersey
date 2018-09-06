@@ -1,5 +1,7 @@
 package br.pessoal.cliente;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.client.Client;
@@ -13,6 +15,9 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.logging.LoggingFeature;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 
 import br.pessoal.to.EmpregadoTO;
 
@@ -20,7 +25,7 @@ public class JerseyClientFuncionario {
 
 	public static void main(String[] args) {
 
-		getFuncionarios();
+		uploadFile();
 	}
 
 	private static void apagarFuncionario() {
@@ -74,6 +79,27 @@ public class JerseyClientFuncionario {
 		System.out.println(response.getStatus());
 		for (EmpregadoTO empregadoDaVez : list) {
 			System.out.println(empregadoDaVez.toString());
+		}
+	}
+	
+	private static void uploadFile() {
+		
+		final Client client = ClientBuilder.newBuilder().register(MultiPartFeature.class).build();
+		 
+	    final FileDataBodyPart filePart = new FileDataBodyPart("file", new File("C:\\Users\\lucas.oliveira\\Desktop\\solaire.jpg"));
+	    FormDataMultiPart formDataMultiPart = new FormDataMultiPart();
+	    final FormDataMultiPart multipart = (FormDataMultiPart) formDataMultiPart.field("foo", "bar").bodyPart(filePart);
+	      
+	    final WebTarget target = client.target("http://localhost:8080/WebService/files/upload");
+	    final Response response = target.request().post(Entity.entity(multipart, multipart.getMediaType()));
+	     
+	    System.out.println(response.getStatus());
+	     
+	    try {
+			formDataMultiPart.close();
+			multipart.close();
+		} catch (IOException e) { 
+			e.printStackTrace();
 		}
 	}
 	
